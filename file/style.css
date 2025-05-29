@@ -1,0 +1,4 @@
+.gameCanvas{
+    z-index: 2;
+    image-rendering: pixelated;
+}
