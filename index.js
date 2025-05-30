@@ -16,3 +16,11 @@ window.onload = function(){
     playBtn.style.left = (canvas.width - 600) + 'px';
     playBtn.style.top = (canvas.height / 2) + 'px';
 }
+playBtn.addEventListener('click', () => {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    playBtn.style.display = 'none';
+    playSpan.style.display = 'none';
+    playBtnBg.style.display = 'none';
+    context.drawImage(scene1Bg, 0, 0, canvas.width, canvas.height);
+    console.log('hi')
+})
