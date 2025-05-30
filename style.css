@@ -1,0 +1,31 @@
+.gameCanvas{
+    z-index: 2;
+    image-rendering: pixelated;
+}
+.btnBg{
+    position: relative;
+    display: none;
+    width: 350;
+    height: auto;
+}
+.startBtn{
+    position: fixed;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+    height: auto;
+    width: fit-content;
+}
+.spanText{
+    display: none;
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    z-index: 1;
+    font-size: 100px;
+}
+
