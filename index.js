@@ -49,30 +49,31 @@ playBtn.addEventListener('click', () => {
     
 })
 function scene1(){
+    let line1 = "Her name was Catricia Calligan, and she owned a flower shop in mid Paw City. She was an active member of the Cathatten country club.";
+    let line2 = "We are about to enter her house, where the crime has been reported by her neighbor, Pawshley Catsmith.";
     textboxDiv.style.display = 'block';
     textbox.style.display = 'block';
     text.style.display = 'inline-block';
     textboxDiv.style.left = ((canvas.width - 500) / 2) + 'px';
     textboxDiv.style.top = ((canvas.height) / 1.35) + 'px';
-    setTimeout(()=>{
-        text.innerText = "Her name was Catricia Calligan, and she owned a flower shop in mid Paw City. She was an active member of the Cathatten country club.";
+
+    typeWriter(text, "This is Detective Pussycat. Right now I am in front of a recently murdered cat's house. This murder occurred in upper east Paw City.", 35, () => {
+        setTimeout(() => {
+            typeWriter(text, line1, 35);
+        }, 500);
+    });
+    typeWriter(text, line2, 35, () => {
+        setTimeout(() => {
+            typeWriter(text, line2, 35);
+        }, 1000);
+    });
+
+    /*setTimeout(()=>{
+        text.innerText =
     }, timeoutTime);
     setTimeout(()=>{
-        text.innerText = "We are about to enter her house, where the crime has been reported by her neighbor, Pawshley Catsmith."
-    }, timeoutTime * 2);
-}
-function scene1(){
-    textboxDiv.style.display = 'block';
-    textbox.style.display = 'block';
-    text.style.display = 'inline-block';
-    textboxDiv.style.left = ((canvas.width - 500) / 2) + 'px';
-    textboxDiv.style.top = ((canvas.height) / 1.35) + 'px';
-    setTimeout(()=>{
-        text.innerText = "Her name was Catricia Calligan, and she owned a flower shop in mid Paw City. She was an active member of the Cathatten country club.";
-    }, timeoutTime);
-    setTimeout(()=>{
-        text.innerText = "We are about to enter her house, where the crime has been reported by her neighbor, Pawshley Catsmith."
-    }, timeoutTime * 2);
+        text.innerText = 
+    }, timeoutTime * 2);*/
 }
 function typeWriter(element, text, speed = 50, callback = null) {
     let i = 0;
