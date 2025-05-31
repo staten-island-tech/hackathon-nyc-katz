@@ -10,13 +10,27 @@
     <canvas class="gameCanvas"></canvas>
 
     <!--display on canvas IMGs-->
-    <img class="startPage startBg bg" src="static/start.jpg" style="display: none;">
+    <img class="startPage startBg bg" src="static/startBg.png" style="display: none;">
     <img class="scene1 scene1Bg bg" src="static/scene1.png" style="display: none;">
 
+    <!--btns-->
     <button type="button" class="startBtn playBtn" style="display: none;">
         <span class="spanText playSpan" style="display: none;">play</span>
         <img src="static/button.png" class="btnBg playBtnBg" style="display: none;">
     </button>
+
+    <!--scene 1-->
+    <div class="textboxDiv" style="display: none;">
+        <img src="static/textbox.png" class="textbox">
+        <span class="text spanText">
+            This is Detective Pussycat. 
+            Right now I am in front of a recently murdered cat's house. 
+            This murder occurred in upper east Paw City.
+        </span>
+    </div>
+   
+    <!--transitions btwn scenes-->
+    <div class="fadeOverlay" style="display: none;"></div>
 
     <script src="index.js"></script>
 </body>

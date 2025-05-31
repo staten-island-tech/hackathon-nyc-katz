@@ -1,3 +1,7 @@
+body{
+    overflow: hidden;
+    position: relative;
+}
 .gameCanvas{
     z-index: 2;
     image-rendering: pixelated;
@@ -5,7 +9,7 @@
 .btnBg{
     position: relative;
     display: none;
-    width: 350;
+    width: 350px;
     height: auto;
 }
 .startBtn{
@@ -17,15 +21,49 @@
     height: auto;
     width: fit-content;
 }
+.playSpan{
+    font-size: 100px;
+}
 .spanText{
     display: none;
     position: absolute;
     top: 50%;
+    left: 50%;
     text-align: center;
     transform: translate(-50%, -50%);
-    text-align: center;
     pointer-events: none;
     z-index: 1;
-    font-size: 100px;
 }
-
+.textboxDiv{
+    position: fixed;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+    height: 200px;
+    width: fit-content;
+}
+.textbox{
+    position: relative;
+    display: none;
+    width: 500px;
+    height: 200px;
+    image-rendering: pixelated;
+}
+.text{
+    font-size: 25px;
+    width: 420px;
+    height: auto;
+}
+.fadeOverlay {
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    background: rgb(32, 32, 32);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .4s ease;
+    z-index: 100;
+}
