@@ -1,0 +1,56 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "untitled.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "TopDownHouse_DoorsAndWindows.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TopDownHouse_FloorsAndWalls.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TopDownHouse_FurnitureState1.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TopDownHouse_FurnitureState2.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "untitled.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 400,
+                "y": 400
+            }
+        }
+    },
+    "last.imagePath": "C:/Users/Hailey/OneDrive/Pictures/Documents/GitHub/hackathon-nyc-katz/static",
+    "map.height": 25,
+    "map.lastUsedFormat": "tmx",
+    "map.width": 25,
+    "openFiles": [
+        "untitled.tmx",
+        "TopDownHouse_DoorsAndWindows.tsx",
+        "TopDownHouse_FloorsAndWalls.tsx",
+        "TopDownHouse_FurnitureState1.tsx",
+        "TopDownHouse_FurnitureState2.tsx"
+    ],
+    "project": "untitled.tiled-project",
+    "recentFiles": [
+        "TopDownHouse_FurnitureState2.tsx",
+        "TopDownHouse_FurnitureState1.tsx",
+        "TopDownHouse_FloorsAndWalls.tsx",
+        "TopDownHouse_DoorsAndWindows.tsx",
+        "untitled.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}
