@@ -104,8 +104,6 @@ function scene2(){
             fadeOverlay.style.display = 'none';
         }, 400)
     }, 200);
-
-    
 }
 function typewriter(element, text, speed, callback) {
     let i = 0;

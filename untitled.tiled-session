@@ -1,12 +1,7 @@
 {
-    "Map/SizeTest": {
-        "height": 4300,
-        "width": 2
-    },
-    "activeFile": "untitled.tmx",
+    "activeFile": "",
     "expandedProjectPaths": [
     ],
-    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "TopDownHouse_DoorsAndWindows.tsx": {
             "scaleInDock": 1,
@@ -28,21 +23,12 @@
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 400,
-                "y": 400
+                "x": 266,
+                "y": 197
             }
         }
     },
-    "last.imagePath": "C:/Users/Hailey/OneDrive/Pictures/Documents/GitHub/hackathon-nyc-katz/static",
-    "map.height": 25,
-    "map.lastUsedFormat": "tmx",
-    "map.width": 25,
     "openFiles": [
-        "untitled.tmx",
-        "TopDownHouse_DoorsAndWindows.tsx",
-        "TopDownHouse_FloorsAndWalls.tsx",
-        "TopDownHouse_FurnitureState1.tsx",
-        "TopDownHouse_FurnitureState2.tsx"
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
@@ -51,6 +37,5 @@
         "TopDownHouse_FloorsAndWalls.tsx",
         "TopDownHouse_DoorsAndWindows.tsx",
         "untitled.tmx"
-    ],
-    "tileset.lastUsedFormat": "tsx"
+    ]
 }
