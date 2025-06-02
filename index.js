@@ -11,6 +11,29 @@ const playBtnBg = document.querySelector('.playBtnBg');
 const scene1Bg = document.querySelector('.scene1Bg');
 //SCENE 2 VARS
 const scene2Bg = document.querySelector('.scene2Bg');
+const catFront = document.querySelector('.catFront');
+const catRight = document.querySelector('.catRight');
+const catLeft = document.querySelector('.catLeft');
+const catBack = document.querySelector('.catBack');
+
+let moving = false;
+let collisonObjs;
+const scale = 2;
+let cat = {
+    speed: 5,
+    x: 260,
+    y: 300,
+    width: 32 * scale,
+    height: 32 * scale
+};
+fetch('scene2.json')
+.then(res => res.json())
+.then(mapData => {
+const objectLayer = mapData.layers.find(layer => layer.name === "Object Layer 1");
+    if (objectLayer && objectLayer.objects) {
+        collisonObjs = objectLayer.objects;
+    }
+});
 //ETC
 const textbox = document.querySelector('.textbox');
 const textboxDiv = document.querySelector('.textboxDiv');
@@ -18,6 +41,7 @@ const text = document.querySelector('.text');
 const textboxBtn = document.querySelector('.textboxBtn');
 const fadeOverlay = document.querySelector('.fadeOverlay');
 const timeoutTime = 10000;
+let overlayCount = 0;
 
 window.onload = function(){
     context.drawImage(startBg, 0, 0, canvas.width, canvas.height);
@@ -48,13 +72,16 @@ playBtn.addEventListener('click', () => {
         setTimeout(() => {
             fadeOverlay.style.display = 'none';
         }, 400)
+
+        overlayCount++;
     }, 200);
 })
 function scene1(){
     const scene1Lines = [
     "This is Detective Pussycat. Right now I am in front of a recently murdered cat's house. This murder occurred in upper east Paw City.",
     "Her name was Catricia Calligan, and she owned a flower shop in mid Paw City. She was an active member of the Cathatten country club.",
-    "We are about to enter her house, where the crime has been reported by her neighbor, Pawshley Catsmith."]
+    "We are about to enter her house, where the crime has been reported by her neighbor, Pawshley Catsmith."
+    ]
     
     textboxDiv.style.display = 'block';
     textbox.style.display = 'block';
@@ -69,7 +96,7 @@ function scene1(){
     function nextLine(){
         if(currentLine < scene1Lines.length){
             textboxBtn.style.display = 'none'; 
-            typewriter(text, scene1Lines[currentLine], 45, () => {
+            typewriter(text, scene1Lines[currentLine], 10, () => {
                 textboxBtn.style.display = 'block'; 
                 currentLine++; 
             });
@@ -103,8 +130,78 @@ function scene2(){
         setTimeout(() => {
             fadeOverlay.style.display = 'none';
         }, 400)
+
+        overlayCount++;
     }, 200);
+
+    window.addEventListener('keydown', direction);
 }
+/*function direction(e){
+    switch(e.key){
+        case "ArrowUp":
+            if(currentDirection !== 'ArrowDown') {
+                currentDirection = 'up';
+                move(0, -1);
+            }
+            break;
+        case "ArrowDown":
+            if(currentDirection !== 'ArrowUp') {
+                currentDirection = 'down';
+                move(0, 1);
+            }
+            break;
+        case "ArrowLeft":
+            if(currentDirection !== 'ArrowRight') {
+                currentDirection = 'left';
+                move(-1, 0);
+            }
+            break;
+        case "ArrowRight":
+            if(currentDirection !== 'ArrowLeft'){
+                currentDirection = 'right';
+                move(1, 0); 
+            } 
+            break;
+    }
+}
+function move(x, y){
+    let newX = cat.x + x * cat.speed;
+    let newY = cat.y + y * cat.speed;
+
+    if (newX < 0 || newX > canvas.width - cat.width) return;
+    if (newY < 0 || newY > canvas.height - cat.height) return;
+    
+    const collison = collisonObjs.some(obj => 
+        newX < (obj.x + obj.width) - 10 &&
+        (newX + cat.width) > obj.x &&
+        newY < (obj.y + obj.height)-10 &&
+        newY + cat.height > obj.y
+    )
+
+    if(!collison){
+        cat.x = newX;
+        cat.y = newY;
+        drawScene2(newX, newY);
+    }
+}
+function drawScene2(x, y){
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(scene2, 0, 0, canvas.width, canvas.height);
+    switch(currentDirection){
+        case 'up':
+            context.drawImage(catBack, x, y, cat.width, cat.height);
+            break;
+        case 'left':
+            context.drawImage(catLeft, x, y, cat.width, cat.height);
+            break;
+        case 'right':
+            context.drawImage(catRight, x, y, cat.width, cat.height);
+            break;
+        case 'down':
+            context.drawImage(catFront, x, y, cat.width, cat.height);
+            break
+    }
+}*/
 function typewriter(element, text, speed, callback) {
     let i = 0;
     element.innerText = "";
