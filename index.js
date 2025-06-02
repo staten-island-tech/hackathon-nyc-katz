@@ -15,7 +15,7 @@ const catFront = document.querySelector('.catFront');
 const catRight = document.querySelector('.catRight');
 const catLeft = document.querySelector('.catLeft');
 const catBack = document.querySelector('.catBack');
-
+let currentDirection = '';
 let moving = false;
 let collisonObjs;
 const scale = 2;
@@ -102,7 +102,32 @@ function scene1(){
             });
         } else {
             textboxBtn.style.display = 'none';
+            fadeOverlay.style.display = 'block';
+            fadeOverlay.style.opacity = '1';
+            
+            setTimeout(() => {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            textboxDiv.style.display = 'none';
+            textbox.style.display = 'none';
+            text.style.display = 'none';
+            textboxBtn.style.display = 'none';
+            context.drawImage(scene2Bg, 0, 0, canvas.width, canvas.height);
+            context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
             scene2();
+
+            setTimeout(() => {
+                fadeOverlay.style.opacity = '.5';
+            }, 400)
+
+            fadeOverlay.style.opacity = '0';
+
+            setTimeout(() => {
+                fadeOverlay.style.display = 'none';
+            }, 400)
+
+            overlayCount++;
+        }, 200);
+           
         } 
     }
 
@@ -110,33 +135,9 @@ function scene1(){
     textboxBtn.addEventListener('click', nextLine);
 }
 function scene2(){
-    fadeOverlay.style.display = 'block';
-    fadeOverlay.style.opacity = '1';
-    
-    setTimeout(() => {
-       context.clearRect(0, 0, canvas.width, canvas.height);
-        textboxDiv.style.display = 'none';
-        textbox.style.display = 'none';
-        text.style.display = 'none';
-        textboxBtn.style.display = 'none';
-        context.drawImage(scene2Bg, 0, 0, canvas.width, canvas.height);
-
-        setTimeout(() => {
-            fadeOverlay.style.opacity = '.5';
-        }, 400)
-
-        fadeOverlay.style.opacity = '0';
-
-        setTimeout(() => {
-            fadeOverlay.style.display = 'none';
-        }, 400)
-
-        overlayCount++;
-    }, 200);
-
     window.addEventListener('keydown', direction);
 }
-/*function direction(e){
+function direction(e){
     switch(e.key){
         case "ArrowUp":
             if(currentDirection !== 'ArrowDown') {
@@ -171,14 +172,14 @@ function move(x, y){
     if (newX < 0 || newX > canvas.width - cat.width) return;
     if (newY < 0 || newY > canvas.height - cat.height) return;
     
-    const collison = collisonObjs.some(obj => 
-        newX < (obj.x + obj.width) - 10 &&
-        (newX + cat.width) > obj.x &&
-        newY < (obj.y + obj.height)-10 &&
+    const collision = collisonObjs.some(obj =>
+        newX < obj.x + obj.width &&
+        newX + cat.width > obj.x &&
+        newY < (obj.y + obj.height) - 30 &&
         newY + cat.height > obj.y
-    )
+    );
 
-    if(!collison){
+    if (!collision) {
         cat.x = newX;
         cat.y = newY;
         drawScene2(newX, newY);
@@ -186,22 +187,26 @@ function move(x, y){
 }
 function drawScene2(x, y){
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.drawImage(scene2, 0, 0, canvas.width, canvas.height);
+    context.drawImage(scene2Bg, 0, 0, canvas.width, canvas.height);
     switch(currentDirection){
         case 'up':
             context.drawImage(catBack, x, y, cat.width, cat.height);
+            console.log(x, y);
             break;
         case 'left':
             context.drawImage(catLeft, x, y, cat.width, cat.height);
+            console.log(x, y);
             break;
         case 'right':
             context.drawImage(catRight, x, y, cat.width, cat.height);
+            console.log(x, y);
             break;
         case 'down':
             context.drawImage(catFront, x, y, cat.width, cat.height);
+            console.log(x, y);
             break
     }
-}*/
+}
 function typewriter(element, text, speed, callback) {
     let i = 0;
     element.innerText = "";
