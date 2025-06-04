@@ -42,9 +42,11 @@ body{
     border: none;
     background-color: transparent;
     padding: 0;
-    height: 200px;
+    height: fit-content;
     width: fit-content;
+    margin: 0;
     white-space: pre-wrap;
+    border: 2px solid red;
 }
 .textbox{
     position: relative;
@@ -52,6 +54,11 @@ body{
     width: 500px;
     height: 200px;
     image-rendering: pixelated;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    border: 2px solid greenyellow;
 }
 .text{
     text-align: center;
@@ -60,6 +67,7 @@ body{
     font-size: 25px;
     width: 420px;
     height: 50px;
+    border: 2px solid blue;
 }
 .fadeOverlay {
     left: 0;

@@ -18,7 +18,7 @@ const catBack = document.querySelector('.catBack');
 let currentDirection = '';
 let moving = false;
 let collisonObjs;
-const scale = 2;
+const scale = 3.5;
 let cat = {
     speed: 5,
     x: 260,
@@ -60,8 +60,9 @@ playBtn.addEventListener('click', () => {
         playBtn.style.display = 'none';
         playSpan.style.display = 'none';
         playBtnBg.style.display = 'none';
-        context.drawImage(scene1Bg, 0, 0, canvas.width, canvas.height);
-        scene1();
+        context.drawImage(scene2Bg, 0, 0, canvas.width, canvas.height);
+        context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
+        scene2();
 
         setTimeout(() => {
             fadeOverlay.style.opacity = '.5';
@@ -96,7 +97,7 @@ function scene1(){
     function nextLine(){
         if(currentLine < scene1Lines.length){
             textboxBtn.style.display = 'none'; 
-            typewriter(text, scene1Lines[currentLine], 10, () => {
+            typewriter(text, scene1Lines[currentLine], 1, () => {
                 textboxBtn.style.display = 'block'; 
                 currentLine++; 
             });
@@ -127,7 +128,6 @@ function scene1(){
 
             overlayCount++;
         }, 200);
-           
         } 
     }
 
@@ -135,6 +135,65 @@ function scene1(){
     textboxBtn.addEventListener('click', nextLine);
 }
 function scene2(){
+    const scene2Lines = [
+        "setTimeout is such a great function im so glad it exists",
+        "setInterval is kind of hard but it's still really useful for when you need to have a timer on something."
+    ]
+    textboxDiv.style.display = 'block';
+    textbox.style.display = 'block';
+    text.style.display = 'inline-block';
+
+    textboxDiv.style.left = (canvas.width - 385) + 'px';
+    textboxDiv.style.top = (canvas.offsetTop + canvas.height - textbox.offsetHeight) - 10 + 'px';
+    textbox.style.width = '350px';
+    textbox.style.height = '150px';
+    text.style.width = '275px';
+    text.style.height = '100px';
+    text.style.fontSize = '19px';
+    textboxBtn.style.left = ((textboxDiv.offsetWidth * 2) - 22) + 'px';
+    textboxBtn.style.top = ((textboxDiv.offsetHeight * 2.5) + 7) + 'px';
+    
+    currentLine = 0;
+    function nextLine(){
+        if(currentLine < scene2Lines.length){
+            textboxBtn.style.display = 'none'; 
+            typewriter(text, scene2Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+        } /*else {
+            textboxBtn.style.display = 'none';
+            fadeOverlay.style.display = 'block';
+            fadeOverlay.style.opacity = '1';
+            
+            setTimeout(() => {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            textboxDiv.style.display = 'none';
+            textbox.style.display = 'none';
+            text.style.display = 'none';
+            textboxBtn.style.display = 'none';
+            context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
+            context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
+            scene2();
+
+            setTimeout(() => {
+                fadeOverlay.style.opacity = '.5';
+            }, 400)
+
+            fadeOverlay.style.opacity = '0';
+
+            setTimeout(() => {
+                fadeOverlay.style.display = 'none';
+            }, 400)
+
+            overlayCount++;
+        }, 200);
+        } */
+    }
+
+    nextLine();
+    textboxBtn.addEventListener('click', nextLine);
+
     window.addEventListener('keydown', direction);
 }
 function direction(e){
@@ -178,7 +237,7 @@ function move(x, y){
         newY < (obj.y + obj.height) - 30 &&
         newY + cat.height > obj.y
     );
-
+    
     if (!collision) {
         cat.x = newX;
         cat.y = newY;
