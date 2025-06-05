@@ -15,7 +15,11 @@ const catFront = document.querySelector('.catFront');
 const catRight = document.querySelector('.catRight');
 const catLeft = document.querySelector('.catLeft');
 const catBack = document.querySelector('.catBack');
+const taxPapers = document.querySelector('.taxpapers');
 let deadCatObj;
+//SCENE 3 VARS
+const scene3Bg = document.querySelector('.scene3Bg');
+const weddingPortrait = document.querySelector('.weddingPortrait');
 
 let currentDirection = '';
 let moving = false;
@@ -36,6 +40,7 @@ const objectLayer = mapData.layers.find(layer => layer.name === "Object Layer 1"
         collisonObjs = objectLayer.objects;
         deadCatObj = objectLayer.objects[2];
         LivingRoomDrawerObj = objectLayer.objects[5];
+        console.log(LivingRoomDrawerObj)
     }
 });
 //ETC
@@ -64,9 +69,9 @@ playBtn.addEventListener('click', () => {
         playBtn.style.display = 'none';
         playSpan.style.display = 'none';
         playBtnBg.style.display = 'none';
-        context.drawImage(scene2Bg, 0, 0, canvas.width, canvas.height);
-        context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
-        scene2();
+        context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
+        //context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
+        scene3();
 
         setTimeout(() => {
             fadeOverlay.style.opacity = '.5';
@@ -146,7 +151,9 @@ function scene2(){
         "...",
         "Oh a gun! Hmm, it's registered under Catricia Calligan, perhaps she used it to defend herself?",
         "Let's look around the room a bit more.",
-        "OMG... look what's in here."
+        "OMG... look what's in here.",
+        "These seem to be tax evasion papers. Maybe the police officer Phatty was after her for the crime and went a little overboard.",
+        "Let's go check the bedroom next."
     ]
     textboxDiv.style.display = 'block';
     textbox.style.display = 'block';
@@ -158,6 +165,7 @@ function scene2(){
     textbox.style.height = '150px';
     text.style.width = '275px';
     text.style.height = '100px';
+    text.style.bottom = '29px';
     text.style.fontSize = '19px';
     textboxBtn.style.left = ((textboxDiv.offsetWidth * 2) - 20) + 'px';
     textboxBtn.style.top = ((textboxDiv.offsetHeight * 2.5) + 25) + 'px';
@@ -188,7 +196,6 @@ function scene2(){
                     cat.x > deadCatObj.x &&
                     cat.x < deadCatObj.x + deadCatObj.width                    
                 ) {
-                    console.log("Cat is right above the object.");
                     window.removeEventListener('keydown', direction); 
                     clearInterval(checkDeadCatInterval);
                     //LINE 2
@@ -223,14 +230,14 @@ function scene2(){
 
             checkAtDrawerInterval = setInterval(() => {
                 if (
-                    cat.y == LivingRoomDrawerObj.y + LivingRoomDrawerObj.height && 
+                    cat.y == 225 && 
                     cat.x > 390 &&
                     cat.x < 500                
                 ) {
-                    console.log("Cat is at the drawer");
                     window.removeEventListener('keydown', direction); 
                     clearInterval(checkAtDrawerInterval);
-                    //LINE 2
+        
+                    context.drawImage(taxPapers, 200, 200, 400, 400);
                     textboxDiv.style.display = 'block';
                     textbox.style.display = 'block';
                     text.style.display = 'inline-block';
@@ -239,27 +246,45 @@ function scene2(){
                         textboxBtn.style.display = 'block'; 
                         currentLine++; 
                     });  
-                } 
+                }
             }, 10);
             return;
         }
-    }
-    nextLine();
-    textboxBtn.addEventListener('click', nextLine);
-}
-        /*textboxBtn.style.display = 'none';
-            fadeOverlay.style.display = 'block';
-            fadeOverlay.style.opacity = '1';
-            
-            setTimeout(() => {
+
+        if(currentLine === 7){
+            textboxBtn.style.display = 'none';
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(scene2Bg, 0, 0, canvas.width, canvas.height);
+            context.drawImage(catFront, 400, 225, cat.width, cat.height);
+            typewriter(text, scene2Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });  
+            return;
+        }
+
+        if(currentLine === 8){
+            textboxBtn.style.display = 'none';
+            typewriter(text, scene2Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });  
+            return;
+        }
+
+        fadeOverlay.style.display = 'block';
+        fadeOverlay.style.opacity = '1';
+        
+        setTimeout(() => {
             context.clearRect(0, 0, canvas.width, canvas.height);
             textboxDiv.style.display = 'none';
             textbox.style.display = 'none';
             text.style.display = 'none';
+            text.innerText = '';
             textboxBtn.style.display = 'none';
             context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
             context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
-            scene2();
+            scene3();
 
             setTimeout(() => {
                 fadeOverlay.style.opacity = '.5';
@@ -272,9 +297,52 @@ function scene2(){
             }, 400)
 
             overlayCount++;
-        }, 200);
-        } */
+        }, 200);    
+    }
 
+    nextLine();
+    textboxBtn.addEventListener('click', nextLine);
+}
+function scene3(){
+    const scene3Lines = [
+        'What a pleasant bedroom and wedding portrait.',
+        'This seems to be her and her husband, Leonardo de Meow, on their wedding day.',
+        'However, recent files show that they divorced a year ago.'
+    ];
+
+    context.drawImage(catFront, canvas.width - 220, canvas.height - 140, cat.width, cat.height);
+    textboxDiv.style.display = 'block';
+    textbox.style.display = 'block';
+    text.style.display = 'inline-block';
+    textboxDiv.style.width = '317px';
+    textboxDiv.style.height = '350px';
+    textboxDiv.style.left = '230px';
+    textboxDiv.style.top = '370px';
+    textbox.style.width = '350px';
+    textbox.style.height = '150px';
+    text.style.textAlign = 'center';
+    text.style.top = '30%';
+    text.style.width = '270px';
+    text.style.height = '0px';
+    text.style.fontSize = '19px';
+    textboxBtn.style.display = 'block';
+    textboxBtn.style.left = (textboxDiv.offsetWidth + 175) + 'px';
+    textboxBtn.style.top = (textboxDiv.offsetHeight + 100) + 'px';
+
+    currentLine = 0
+    if(currentLine === 0){
+        textboxBtn.style.display = 'none';
+        typewriter(text, scene3Lines[currentLine], 10, () => {
+            context.drawImage(weddingPortrait, 400, 400, 400, 400);
+            textboxBtn.style.display = 'block'; 
+            currentLine++; 
+        });  
+        return;
+    }
+    ;
+    
+   
+}
 function direction(e){
     switch(e.key){
         case "ArrowUp":

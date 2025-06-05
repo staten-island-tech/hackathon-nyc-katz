@@ -97,3 +97,10 @@ body{
     position: relative;
     image-rendering: pixelated;
 }
+.taxpaper{
+    width: 400;
+    height: 400;
+}
+.weddingPortrait{
+    z-index: 3;
+}
