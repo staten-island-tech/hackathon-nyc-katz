@@ -15,6 +15,8 @@ const catFront = document.querySelector('.catFront');
 const catRight = document.querySelector('.catRight');
 const catLeft = document.querySelector('.catLeft');
 const catBack = document.querySelector('.catBack');
+let deadCatObj;
+
 let currentDirection = '';
 let moving = false;
 let collisonObjs;
@@ -32,6 +34,8 @@ fetch('scene2.json')
 const objectLayer = mapData.layers.find(layer => layer.name === "Object Layer 1");
     if (objectLayer && objectLayer.objects) {
         collisonObjs = objectLayer.objects;
+        deadCatObj = objectLayer.objects[2];
+        LivingRoomDrawerObj = objectLayer.objects[5];
     }
 });
 //ETC
@@ -136,8 +140,13 @@ function scene1(){
 }
 function scene2(){
     const scene2Lines = [
-        "setTimeout is such a great function im so glad it exists",
-        "setInterval is kind of hard but it's still really useful for when you need to have a timer on something."
+        "Gosh, the living room smells of death. May Catricia rest in peace.",
+        "Let's go investigate the body.",
+        "From the looks of it, it seems as if she died from a slit throat. Minimal damage everywhere else.",
+        "...",
+        "Oh a gun! Hmm, it's registered under Catricia Calligan, perhaps she used it to defend herself?",
+        "Let's look around the room a bit more.",
+        "OMG... look what's in here."
     ]
     textboxDiv.style.display = 'block';
     textbox.style.display = 'block';
@@ -150,19 +159,95 @@ function scene2(){
     text.style.width = '275px';
     text.style.height = '100px';
     text.style.fontSize = '19px';
-    textboxBtn.style.left = ((textboxDiv.offsetWidth * 2) - 22) + 'px';
-    textboxBtn.style.top = ((textboxDiv.offsetHeight * 2.5) + 7) + 'px';
+    textboxBtn.style.left = ((textboxDiv.offsetWidth * 2) - 20) + 'px';
+    textboxBtn.style.top = ((textboxDiv.offsetHeight * 2.5) + 25) + 'px';
     
     currentLine = 0;
+    let checkDeadCatInterval;
+
     function nextLine(){
-        if(currentLine < scene2Lines.length){
+        if(currentLine <= 1){
             textboxBtn.style.display = 'none'; 
             typewriter(text, scene2Lines[currentLine], 10, () => {
                 textboxBtn.style.display = 'block'; 
                 currentLine++; 
             });
-        } /*else {
-            textboxBtn.style.display = 'none';
+            return;
+        } 
+
+        if(currentLine === 2) {
+            textboxDiv.style.display = 'none';
+            textbox.style.display = 'none';
+            text.style.display = 'none';
+            textboxBtn.style.display = 'none'; 
+            window.addEventListener('keydown', direction); 
+
+            checkDeadCatInterval = setInterval(() => {
+                if (
+                    cat.y == 455 && 
+                    cat.x > deadCatObj.x &&
+                    cat.x < deadCatObj.x + deadCatObj.width                    
+                ) {
+                    console.log("Cat is right above the object.");
+                    window.removeEventListener('keydown', direction); 
+                    clearInterval(checkDeadCatInterval);
+                    //LINE 2
+                    textboxDiv.style.display = 'block';
+                    textbox.style.display = 'block';
+                    text.style.display = 'inline-block';
+
+                    typewriter(text, scene2Lines[currentLine], 10, () => {
+                        textboxBtn.style.display = 'block'; 
+                        currentLine++; 
+                    });  
+                } 
+            }, 10);
+            return;
+        }
+
+        if(currentLine === 3 || currentLine === 4 || currentLine === 5){
+            textboxBtn.style.display = 'none'; 
+            typewriter(text, scene2Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            }); 
+            return;
+        }
+
+        let checkAtDrawerInterval;
+        if(currentLine === 6){
+            textboxDiv.style.display = 'none';
+            textbox.style.display = 'none';
+            text.style.display = 'none';
+            window.addEventListener('keydown', direction); 
+
+            checkAtDrawerInterval = setInterval(() => {
+                if (
+                    cat.y == LivingRoomDrawerObj.y + LivingRoomDrawerObj.height && 
+                    cat.x > 390 &&
+                    cat.x < 500                
+                ) {
+                    console.log("Cat is at the drawer");
+                    window.removeEventListener('keydown', direction); 
+                    clearInterval(checkAtDrawerInterval);
+                    //LINE 2
+                    textboxDiv.style.display = 'block';
+                    textbox.style.display = 'block';
+                    text.style.display = 'inline-block';
+
+                    typewriter(text, scene2Lines[currentLine], 10, () => {
+                        textboxBtn.style.display = 'block'; 
+                        currentLine++; 
+                    });  
+                } 
+            }, 10);
+            return;
+        }
+    }
+    nextLine();
+    textboxBtn.addEventListener('click', nextLine);
+}
+        /*textboxBtn.style.display = 'none';
             fadeOverlay.style.display = 'block';
             fadeOverlay.style.opacity = '1';
             
@@ -189,13 +274,7 @@ function scene2(){
             overlayCount++;
         }, 200);
         } */
-    }
 
-    nextLine();
-    textboxBtn.addEventListener('click', nextLine);
-
-    window.addEventListener('keydown', direction);
-}
 function direction(e){
     switch(e.key){
         case "ArrowUp":
