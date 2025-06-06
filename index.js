@@ -23,7 +23,9 @@ const weddingPortrait = document.querySelector('.weddingPortrait');
 
 let currentDirection = '';
 let moving = false;
-let collisonObjs;
+let currentScene;
+let collisionObjsScene2;
+let collisionObjsScene3;
 const scale = 3.5;
 let cat = {
     speed: 5,
@@ -37,12 +39,20 @@ fetch('scene2.json')
 .then(mapData => {
 const objectLayer = mapData.layers.find(layer => layer.name === "Object Layer 1");
     if (objectLayer && objectLayer.objects) {
-        collisonObjs = objectLayer.objects;
+        collisionObjsScene2 = objectLayer.objects;
         deadCatObj = objectLayer.objects[2];
         LivingRoomDrawerObj = objectLayer.objects[5];
-        console.log(LivingRoomDrawerObj)
     }
 });
+fetch('scene3.json')
+.then(res=>res.json())
+.then(mapData => {
+    const objectLayer = mapData.layers.find(layer => layer.name === 'Object Layer 1');
+    if (objectLayer && objectLayer.objects){
+        collisionObjsScene3 = objectLayer.objects;
+        console.log(collisionObjsScene3)
+    }
+})
 //ETC
 const textbox = document.querySelector('.textbox');
 const textboxDiv = document.querySelector('.textboxDiv');
@@ -70,7 +80,11 @@ playBtn.addEventListener('click', () => {
         playSpan.style.display = 'none';
         playBtnBg.style.display = 'none';
         context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
+        //context.drawImage(scene1Bg, 0, 0, canvas.width, canvas.height);
+        //scene1();
         //context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
+        context.drawImage(catFront, 580, 660, cat.width, cat.height);
+
         scene3();
 
         setTimeout(() => {
@@ -92,7 +106,8 @@ function scene1(){
     "Her name was Catricia Calligan, and she owned a flower shop in mid Paw City. She was an active member of the Cathatten country club.",
     "We are about to enter her house, where the crime has been reported by her neighbor, Pawshley Catsmith."
     ]
-    
+    currentScene = 1;
+
     textboxDiv.style.display = 'block';
     textbox.style.display = 'block';
     text.style.display = 'inline-block';
@@ -155,6 +170,7 @@ function scene2(){
         "These seem to be tax evasion papers. Maybe the police officer Phatty was after her for the crime and went a little overboard.",
         "Let's go check the bedroom next."
     ]
+    currentScene = 2;
     textboxDiv.style.display = 'block';
     textbox.style.display = 'block';
     text.style.display = 'inline-block';
@@ -282,6 +298,7 @@ function scene2(){
             text.style.display = 'none';
             text.innerText = '';
             textboxBtn.style.display = 'none';
+            window.removeEventListener('keydown', direction); 
             context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
             context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
             scene3();
@@ -311,7 +328,7 @@ function scene3(){
         "Let's explore around a bit more."
     ];
 
-    context.drawImage(catFront, canvas.width - 220, canvas.height - 140, cat.width, cat.height);
+    currentScene = 3;
     textboxDiv.style.display = 'block';
     textbox.style.display = 'block';
     text.style.display = 'inline-block';
@@ -366,16 +383,25 @@ function scene3(){
         }, 500);
             return;
         }
+
+        if(currentLine === 2 || currentLine === 3){
+            typewriter(text, scene3Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            }); 
+            return;
+        }
+
+        if(currentLine === 4){
+            textboxDiv.style.display = 'none';
+            textbox.style.display = 'none';
+            text.style.display = 'none';
+            textboxBtn.style.display = 'none';
+           
+            window.addEventListener('keydown', direction);
+        }
     }
     
-    if(currentLine === 2 || currentLine === 3){
-        typewriter(text, scene3Lines[currentLine], 10, () => {
-            textboxBtn.style.display = 'block'; 
-            currentLine++; 
-        }); 
-        return;
-    }
-
     nextLine();
     textboxBtn.addEventListener('click', nextLine);
 }
@@ -414,7 +440,19 @@ function move(x, y){
     if (newX < 0 || newX > canvas.width - cat.width) return;
     if (newY < 0 || newY > canvas.height - cat.height) return;
     
-    const collision = collisonObjs.some(obj =>
+    /*let collisionObjs = '';
+    let drawFunction ='';
+    
+    if(currentScene === 2){
+        collisionObjs = collisionObjsScene2;
+        drawFunction = drawScene2;
+    }
+    if(currentScene === 3){
+        collisionObjs = collisionObjsScene3;
+        drawFunction = drawScene3;
+    }*/
+
+    const collision = collisionObjsScene3.some(obj =>
         newX < obj.x + obj.width &&
         newX + cat.width > obj.x &&
         newY < (obj.y + obj.height) - 30 &&
@@ -424,7 +462,7 @@ function move(x, y){
     if (!collision) {
         cat.x = newX;
         cat.y = newY;
-        drawScene2(newX, newY);
+        drawScene3(newX, newY);
     }
 }
 function drawScene2(x, y){
@@ -447,6 +485,28 @@ function drawScene2(x, y){
             context.drawImage(catFront, x, y, cat.width, cat.height);
             console.log(x, y);
             break
+    }
+}
+function drawScene3(x, y){
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
+    switch(currentDirection){
+        case 'up':
+            context.drawImage(catBack, x, y, cat.width, cat.height);
+            console.log(x, y);
+            break;
+        case 'left':
+            context.drawImage(catLeft, x, y, cat.width, cat.height);
+            console.log(x, y);
+            break;
+        case 'right':
+            context.drawImage(catRight, x, y, cat.width, cat.height);
+            console.log(x, y);
+            break;
+        case 'down':
+            context.drawImage(catFront, x, y, cat.width, cat.height);
+            console.log(x, y);
+            break;
     }
 }
 function typewriter(element, text, speed, callback) {
