@@ -306,8 +306,9 @@ function scene2(){
 function scene3(){
     const scene3Lines = [
         'What a pleasant bedroom and wedding portrait.',
-        'This seems to be her and her husband, Leonardo de Meow, on their wedding day.',
-        'However, recent files show that they divorced a year ago.'
+        'This seems to be her and her husband, Leonardo di Meowci, on their wedding day.',
+        'However, recent files show that they divorced a year ago.',
+        "Let's explore around a bit more."
     ];
 
     context.drawImage(catFront, canvas.width - 220, canvas.height - 140, cat.width, cat.height);
@@ -330,18 +331,53 @@ function scene3(){
     textboxBtn.style.top = (textboxDiv.offsetHeight + 100) + 'px';
 
     currentLine = 0
-    if(currentLine === 0){
-        textboxBtn.style.display = 'none';
-        typewriter(text, scene3Lines[currentLine], 10, () => {
-            context.drawImage(weddingPortrait, 400, 400, 400, 400);
+    function nextLine(){
+        if(currentLine === 0){
+            textboxBtn.style.display = 'none';
+            typewriter(text, scene3Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+                
+        });  
+            return;
+        }
+    if (currentLine === 1){
+        setTimeout(()=>{
+            textboxDiv.style.display = 'none';
+            textbox.style.display = 'none';
+            text.style.display = 'none';
+            textboxBtn.style.display = 'none';
+            context.drawImage(weddingPortrait, 200, 200, 400, 400);
+        }, 1);
+
+        setTimeout(()=>{
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
+            context.drawImage(catFront, canvas.width - 220, canvas.height - 140, cat.width, cat.height); 
+            textboxDiv.style.display = 'block';
+            textbox.style.display = 'block';
+            text.style.display = 'inline-block';
+            textboxBtn.style.display = 'block'; 
+
+            typewriter(text, scene3Lines[currentLine], 10, () => {
             textboxBtn.style.display = 'block'; 
             currentLine++; 
         });  
+        }, 500);
+            return;
+        }
+    }
+    
+    if(currentLine === 2 || currentLine === 3){
+        typewriter(text, scene3Lines[currentLine], 10, () => {
+            textboxBtn.style.display = 'block'; 
+            currentLine++; 
+        }); 
         return;
     }
-    ;
-    
-   
+
+    nextLine();
+    textboxBtn.addEventListener('click', nextLine);
 }
 function direction(e){
     switch(e.key){
