@@ -63,59 +63,59 @@
          "name":"Object Layer 1",
          "objects":[
                 {
-                 "height":648,
+                 "height":500,
                  "id":1,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":472,
-                 "x":272,
-                 "y":168
+                 "width":386,
+                 "x":200,
+                 "y":125
                 }, 
                 {
-                 "height":304,
+                 "height":250,
                  "id":4,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":96,
+                 "width":80,
                  "x":16,
-                 "y":640
+                 "y":505
                 }, 
                 {
-                 "height":192,
+                 "height":150,
                  "id":5,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":120,
-                 "x":872,
-                 "y":776
+                 "x":680,
+                 "y":600
                 }, 
                 {
-                 "height":184,
+                 "height":150,
                  "id":7,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":256,
-                 "x":760,
-                 "y":248
+                 "width":185,
+                 "x":590,
+                 "y":189
                 }, 
                 {
-                 "height":176,
+                 "height":150,
                  "id":8,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":240,
+                 "width":185,
                  "x":16,
-                 "y":248
+                 "y":189
                 }, 
                 {
                  "height":0,

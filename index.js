@@ -20,6 +20,8 @@ let deadCatObj;
 //SCENE 3 VARS
 const scene3Bg = document.querySelector('.scene3Bg');
 const weddingPortrait = document.querySelector('.weddingPortrait');
+let rightSideTable;
+let leftSideTable;
 
 let currentDirection = '';
 let moving = false;
@@ -50,9 +52,10 @@ fetch('scene3.json')
     const objectLayer = mapData.layers.find(layer => layer.name === 'Object Layer 1');
     if (objectLayer && objectLayer.objects){
         collisionObjsScene3 = objectLayer.objects;
-        console.log(collisionObjsScene3)
+        rightSideTable = objectLayer.objects[4];
+        leftSideTable = objectLayer.objects[5];
     }
-})
+});
 //ETC
 const textbox = document.querySelector('.textbox');
 const textboxDiv = document.querySelector('.textboxDiv');
@@ -83,7 +86,7 @@ playBtn.addEventListener('click', () => {
         //context.drawImage(scene1Bg, 0, 0, canvas.width, canvas.height);
         //scene1();
         //context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
-        context.drawImage(catFront, 580, 660, cat.width, cat.height);
+        ///context.drawImage(catFront, 580, 660, cat.width, cat.height);
 
         scene3();
 
@@ -325,7 +328,12 @@ function scene3(){
         'What a pleasant bedroom and wedding portrait.',
         'This seems to be her and her husband, Leonardo di Meowci, on their wedding day.',
         'However, recent files show that they divorced a year ago.',
-        "Let's explore around a bit more."
+        "Let's explore around a bit more, to the side table on the right.",
+        'Looks like a newspaper article titled "di Meowci goes insane after wife gains success".',
+        'Maybe her husband is still out there.',
+        "Let's go to the left bedside table.",
+        'OMG this must be the knife that the killer used to kill Patricia. Wonder why he left it here.',
+        'aslfjwr'
     ];
 
     currentScene = 3;
@@ -370,7 +378,11 @@ function scene3(){
         setTimeout(()=>{
             context.clearRect(0, 0, canvas.width, canvas.height);
             context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
-            context.drawImage(catFront, canvas.width - 220, canvas.height - 140, cat.width, cat.height); 
+            cat.x = canvas.width - 220;
+            cat.y = canvas.height - 140;
+            cat.width = 90;
+            cat.height = 90;
+            context.drawImage(catFront, cat.x, cat.y, cat.width, cat.height); 
             textboxDiv.style.display = 'block';
             textbox.style.display = 'block';
             text.style.display = 'inline-block';
@@ -399,7 +411,101 @@ function scene3(){
             textboxBtn.style.display = 'none';
            
             window.addEventListener('keydown', direction);
+
+            let rightSideTableInterval;
+            rightSideTableInterval = setInterval(() => {
+                if (
+                    cat.y == 310 && 
+                    cat.x > 580 &&
+                    cat.x < 685                   
+                ) {
+                    window.removeEventListener('keydown', direction); 
+                    clearInterval(rightSideTableInterval);
+                    textboxDiv.style.display = 'block';
+                    textbox.style.display = 'block';
+                    text.style.display = 'inline-block';
+
+                    typewriter(text, scene3Lines[currentLine], 10, () => {
+                        textboxBtn.style.display = 'block'; 
+                        currentLine++; 
+                    });  
+                } 
+            }, 10);
+            return;
         }
+
+        if(currentLine === 5 || currentLine === 6){
+            typewriter(text, scene3Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });  
+            return;
+        }
+
+        if(currentLine === 7){
+            textboxDiv.style.display = 'none';
+            textbox.style.display = 'none';
+            textboxBtn.style.display = 'none';
+           
+            window.addEventListener('keydown', direction);
+
+            let leftSideTableInterval;
+            leftSideTableInterval = setInterval(() => {
+                if (
+                    cat.y == 310 && 
+                    cat.x > 15 &&
+                    cat.x < 105                 
+                ) {
+                    window.removeEventListener('keydown', direction); 
+                    clearInterval(leftSideTableInterval);
+                    textboxDiv.style.display = 'block';
+                    textbox.style.display = 'block';
+                    text.style.display = 'inline-block';
+
+                    typewriter(text, scene3Lines[currentLine], 10, () => {
+                        textboxBtn.style.display = 'block'; 
+                        currentLine++; 
+                    });  
+                } 
+            }, 10);
+            return;
+        }
+
+        if(currentLine === 8){
+            typewriter(text, scene3Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });  
+            return;
+        }
+
+        fadeOverlay.style.display = 'block';
+        fadeOverlay.style.opacity = '1';
+        
+        setTimeout(() => {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            textboxDiv.style.display = 'none';
+            textbox.style.display = 'none';
+            text.style.display = 'none';
+            text.innerText = '';
+            textboxBtn.style.display = 'none';
+            window.removeEventListener('keydown', direction); 
+            context.drawImage(scene2Bg, 0, 0, canvas.width, canvas.height);
+            context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
+            scene2();
+
+            setTimeout(() => {
+                fadeOverlay.style.opacity = '.5';
+            }, 400)
+
+            fadeOverlay.style.opacity = '0';
+
+            setTimeout(() => {
+                fadeOverlay.style.display = 'none';
+            }, 400)
+
+            overlayCount++;
+        }, 200);    
     }
     
     nextLine();
@@ -428,7 +534,7 @@ function direction(e){
         case "ArrowRight":
             if(currentDirection !== 'ArrowLeft'){
                 currentDirection = 'right';
-                move(1, 0); 
+                move(1, 0);
             } 
             break;
     }
@@ -440,8 +546,8 @@ function move(x, y){
     if (newX < 0 || newX > canvas.width - cat.width) return;
     if (newY < 0 || newY > canvas.height - cat.height) return;
     
-    /*let collisionObjs = '';
-    let drawFunction ='';
+    let collisionObjs;
+    let drawFunction;
     
     if(currentScene === 2){
         collisionObjs = collisionObjsScene2;
@@ -450,19 +556,19 @@ function move(x, y){
     if(currentScene === 3){
         collisionObjs = collisionObjsScene3;
         drawFunction = drawScene3;
-    }*/
+    }
 
-    const collision = collisionObjsScene3.some(obj =>
+    const collision = collisionObjs.some(obj =>
         newX < obj.x + obj.width &&
         newX + cat.width > obj.x &&
         newY < (obj.y + obj.height) - 30 &&
         newY + cat.height > obj.y
     );
-    
+    console.log(collision)
     if (!collision) {
         cat.x = newX;
         cat.y = newY;
-        drawScene3(newX, newY);
+        drawFunction(newX, newY);
     }
 }
 function drawScene2(x, y){
