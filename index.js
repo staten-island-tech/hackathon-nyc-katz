@@ -20,8 +20,12 @@ let deadCatObj;
 //SCENE 3 VARS
 const scene3Bg = document.querySelector('.scene3Bg');
 const weddingPortrait = document.querySelector('.weddingPortrait');
+const knife = document.querySelector('.knife');
+const newspaper = document.querySelector('.newspaper');
 let rightSideTable;
 let leftSideTable;
+//SCENE 4 VARS
+const scene4Bg = document.querySelector('.scene4Bg');
 
 let currentDirection = '';
 let moving = false;
@@ -91,13 +95,13 @@ playBtn.addEventListener('click', () => {
         playBtn.style.display = 'none';
         playSpan.style.display = 'none';
         playBtnBg.style.display = 'none';
-        context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
+        context.drawImage(scene4Bg, 0, 0, canvas.width, canvas.height);
         //context.drawImage(scene1Bg, 0, 0, canvas.width, canvas.height);
         //scene1();
         //context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
         ///context.drawImage(catFront, 580, 660, cat.width, cat.height);
 
-        scene3();
+        scene4();
 
         setTimeout(() => {
             fadeOverlay.style.opacity = '.5';
@@ -344,7 +348,6 @@ function scene3(){
         'OMG this must be the knife that the killer used to kill Patricia. Wonder why he left it here.',
         'aslfjwr'
     ];
-    currentScene = 3;
 
     currentScene = 3;
     textboxDiv.style.display = 'block';
@@ -431,14 +434,34 @@ function scene3(){
                 ) {
                     window.removeEventListener('keydown', direction); 
                     clearInterval(rightSideTableInterval);
-                    textboxDiv.style.display = 'block';
-                    textbox.style.display = 'block';
-                    text.style.display = 'inline-block';
 
-                    typewriter(text, scene3Lines[currentLine], 10, () => {
+                    setTimeout(()=>{
+                        textboxDiv.style.display = 'none';
+                        textbox.style.display = 'none';
+                        text.style.display = 'none';
+                        textboxBtn.style.display = 'none';
+                        context.drawImage(newspaper, 200, 200, 400, 400);
+                    }, 1);
+                                
+
+                    setTimeout(()=>{
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
+                        //cat.x = canvas.width - 220;
+                        //cat.y = canvas.height - 140;
+                        cat.width = 90;
+                        cat.height = 90;
+                        context.drawImage(catFront, 596, 310, cat.width, cat.height); 
+                        textboxDiv.style.display = 'block';
+                        textbox.style.display = 'block';
+                        text.style.display = 'inline-block';
                         textboxBtn.style.display = 'block'; 
-                        currentLine++; 
-                    });  
+
+                        typewriter(text, scene3Lines[currentLine], 10, () => {
+                            textboxBtn.style.display = 'block'; 
+                            currentLine++; 
+                        });  
+                    }, 500);
                 } 
             }, 10);
             return;
@@ -468,14 +491,34 @@ function scene3(){
                 ) {
                     window.removeEventListener('keydown', direction); 
                     clearInterval(leftSideTableInterval);
-                    textboxDiv.style.display = 'block';
-                    textbox.style.display = 'block';
-                    text.style.display = 'inline-block';
 
-                    typewriter(text, scene3Lines[currentLine], 10, () => {
+                    setTimeout(()=>{
+                        textboxDiv.style.display = 'none';
+                        textbox.style.display = 'none';
+                        text.style.display = 'none';
+                        textboxBtn.style.display = 'none';
+                        context.drawImage(knife, 200, 200, 400, 400);
+                    }, 1);
+                                
+
+                    setTimeout(()=>{
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
+                        cat.x = canvas.width - 220;
+                        cat.y = canvas.height - 140;
+                        cat.width = 90;
+                        cat.height = 90;
+                        context.drawImage(catFront, 55, 310, cat.width, cat.height); 
+                        textboxDiv.style.display = 'block';
+                        textbox.style.display = 'block';
+                        text.style.display = 'inline-block';
                         textboxBtn.style.display = 'block'; 
-                        currentLine++; 
-                    });  
+
+                        typewriter(text, scene3Lines[currentLine], 10, () => {
+                            textboxBtn.style.display = 'block'; 
+                            currentLine++; 
+                        });  
+                    }, 500);
                 } 
             }, 10);
             return;
@@ -500,9 +543,9 @@ function scene3(){
             text.innerText = '';
             textboxBtn.style.display = 'none';
             window.removeEventListener('keydown', direction); 
-            context.drawImage(scene2Bg, 0, 0, canvas.width, canvas.height);
+            context.drawImage(scene4Bg, 0, 0, canvas.width, canvas.height);
             context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
-            scene2();
+            scene4();
 
             setTimeout(() => {
                 fadeOverlay.style.opacity = '.5';
@@ -520,6 +563,30 @@ function scene3(){
     
     nextLine();
     textboxBtn.addEventListener('click', nextLine);
+}
+function scene4(){
+    const scene4Lines = [
+        
+    ];
+
+    currentScene = 4;
+    textboxDiv.style.display = 'block';
+    textbox.style.display = 'block';
+    text.style.display = 'inline-block';
+    textboxDiv.style.width = '317px';
+    textboxDiv.style.height = '350px';
+    textboxDiv.style.left = '230px';
+    textboxDiv.style.top = '370px';
+    textbox.style.width = '350px';
+    textbox.style.height = '150px';
+    text.style.textAlign = 'center';
+    text.style.top = '30%';
+    text.style.width = '270px';
+    text.style.height = '0px';
+    text.style.fontSize = '19px';
+    textboxBtn.style.display = 'block';
+    textboxBtn.style.left = (textboxDiv.offsetWidth + 175) + 'px';
+    textboxBtn.style.top = (textboxDiv.offsetHeight + 100) + 'px';
 }
 function direction(e){
     switch(e.key){
