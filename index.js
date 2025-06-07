@@ -56,6 +56,15 @@ fetch('scene3.json')
         leftSideTable = objectLayer.objects[5];
     }
 });
+fetch('scene3.json')
+.then(res=>res.json())
+.then(mapData => {
+    const objectLayer = mapData.layers.find(layer => layer.name === 'Object Layer 1');
+    if (objectLayer && objectLayer.objects){
+        collisionObjsScene3 = objectLayer.objects;
+        
+    }
+})
 //ETC
 const textbox = document.querySelector('.textbox');
 const textboxDiv = document.querySelector('.textboxDiv');
@@ -335,6 +344,7 @@ function scene3(){
         'OMG this must be the knife that the killer used to kill Patricia. Wonder why he left it here.',
         'aslfjwr'
     ];
+    currentScene = 3;
 
     currentScene = 3;
     textboxDiv.style.display = 'block';
