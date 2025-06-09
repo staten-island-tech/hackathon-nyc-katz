@@ -20,6 +20,15 @@ let deadCatObj;
 //SCENE 3 VARS
 const scene3Bg = document.querySelector('.scene3Bg');
 const weddingPortrait = document.querySelector('.weddingPortrait');
+const knife = document.querySelector('.knife');
+const newspaper = document.querySelector('.newspaper');
+let rightSideTable;
+let leftSideTable;
+//SCENE 4 VARS
+const scene4Bg = document.querySelector('.scene4Bg');
+//SCENE 5 VARS
+const scene5Bg = document.querySelector('.scene5Bg');
+
 
 let currentDirection = '';
 let moving = false;
@@ -42,6 +51,16 @@ const objectLayer = mapData.layers.find(layer => layer.name === "Object Layer 1"
         collisionObjsScene2 = objectLayer.objects;
         deadCatObj = objectLayer.objects[2];
         LivingRoomDrawerObj = objectLayer.objects[5];
+    }
+});
+fetch('scene3.json')
+.then(res=>res.json())
+.then(mapData => {
+    const objectLayer = mapData.layers.find(layer => layer.name === 'Object Layer 1');
+    if (objectLayer && objectLayer.objects){
+        collisionObjsScene3 = objectLayer.objects;
+        rightSideTable = objectLayer.objects[4];
+        leftSideTable = objectLayer.objects[5];
     }
 });
 fetch('scene3.json')
@@ -79,11 +98,13 @@ playBtn.addEventListener('click', () => {
         playBtn.style.display = 'none';
         playSpan.style.display = 'none';
         playBtnBg.style.display = 'none';
-        context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
+        context.drawImage(scene5Bg, 0, 0, canvas.width, canvas.height);
         //context.drawImage(scene1Bg, 0, 0, canvas.width, canvas.height);
         //scene1();
         //context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
-        scene3();
+        ///context.drawImage(catFront, 580, 660, cat.width, cat.height);
+
+        scene5();
 
         setTimeout(() => {
             fadeOverlay.style.opacity = '.5';
@@ -296,6 +317,7 @@ function scene2(){
             text.style.display = 'none';
             text.innerText = '';
             textboxBtn.style.display = 'none';
+            window.removeEventListener('keydown', direction); 
             context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
             context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
             scene3();
@@ -322,11 +344,15 @@ function scene3(){
         'What a pleasant bedroom and wedding portrait.',
         'This seems to be her and her husband, Leonardo di Meowci, on their wedding day.',
         'However, recent files show that they divorced a year ago.',
-        "Let's explore around a bit more."
+        "Let's explore around a bit more, to the side table on the right.",
+        'Looks like a newspaper article titled "di Meowci goes insane after wife gains success".',
+        'Maybe her husband is still out there.',
+        "Let's go to the left bedside table.",
+        'OMG this must be the knife that the killer used to kill Patricia. Wonder why he left it here.',
+        'aslfjwr'
     ];
-    currentScene = 3;
 
-    context.drawImage(catFront, canvas.width - 220, canvas.height - 140, cat.width, cat.height);
+    currentScene = 3;
     textboxDiv.style.display = 'block';
     textbox.style.display = 'block';
     text.style.display = 'inline-block';
@@ -368,7 +394,11 @@ function scene3(){
         setTimeout(()=>{
             context.clearRect(0, 0, canvas.width, canvas.height);
             context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
-            context.drawImage(catFront, canvas.width - 220, canvas.height - 140, cat.width, cat.height); 
+            cat.x = canvas.width - 220;
+            cat.y = canvas.height - 140;
+            cat.width = 90;
+            cat.height = 90;
+            context.drawImage(catFront, cat.x, cat.y, cat.width, cat.height); 
             textboxDiv.style.display = 'block';
             textbox.style.display = 'block';
             text.style.display = 'inline-block';
@@ -395,10 +425,490 @@ function scene3(){
             textbox.style.display = 'none';
             text.style.display = 'none';
             textboxBtn.style.display = 'none';
+           
             window.addEventListener('keydown', direction);
+
+            let rightSideTableInterval;
+            rightSideTableInterval = setInterval(() => {
+                if (
+                    cat.y == 310 && 
+                    cat.x > 580 &&
+                    cat.x < 685                   
+                ) {
+                    window.removeEventListener('keydown', direction); 
+                    clearInterval(rightSideTableInterval);
+
+                    setTimeout(()=>{
+                        textboxDiv.style.display = 'none';
+                        textbox.style.display = 'none';
+                        text.style.display = 'none';
+                        textboxBtn.style.display = 'none';
+                        context.drawImage(newspaper, 200, 200, 400, 400);
+                    }, 1);
+                                
+
+                    setTimeout(()=>{
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
+                        //cat.x = canvas.width - 220;
+                        //cat.y = canvas.height - 140;
+                        cat.width = 90;
+                        cat.height = 90;
+                        context.drawImage(catFront, 596, 310, cat.width, cat.height); 
+                        textboxDiv.style.display = 'block';
+                        textbox.style.display = 'block';
+                        text.style.display = 'inline-block';
+                        textboxBtn.style.display = 'block'; 
+
+                        typewriter(text, scene3Lines[currentLine], 10, () => {
+                            textboxBtn.style.display = 'block'; 
+                            currentLine++; 
+                        });  
+                    }, 500);
+                } 
+            }, 10);
+            return;
         }
+
+        if(currentLine === 5 || currentLine === 6){
+            typewriter(text, scene3Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });  
+            return;
+        }
+
+        if(currentLine === 7){
+            textboxDiv.style.display = 'none';
+            textbox.style.display = 'none';
+            textboxBtn.style.display = 'none';
+           
+            window.addEventListener('keydown', direction);
+
+            let leftSideTableInterval;
+            leftSideTableInterval = setInterval(() => {
+                if (
+                    cat.y == 310 && 
+                    cat.x > 15 &&
+                    cat.x < 105                 
+                ) {
+                    window.removeEventListener('keydown', direction); 
+                    clearInterval(leftSideTableInterval);
+
+                    setTimeout(()=>{
+                        textboxDiv.style.display = 'none';
+                        textbox.style.display = 'none';
+                        text.style.display = 'none';
+                        textboxBtn.style.display = 'none';
+                        context.drawImage(knife, 200, 200, 400, 400);
+                    }, 1);
+                                
+
+                    setTimeout(()=>{
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        context.drawImage(scene3Bg, 0, 0, canvas.width, canvas.height);
+                        cat.x = canvas.width - 220;
+                        cat.y = canvas.height - 140;
+                        cat.width = 90;
+                        cat.height = 90;
+                        context.drawImage(catFront, 55, 310, cat.width, cat.height); 
+                        textboxDiv.style.display = 'block';
+                        textbox.style.display = 'block';
+                        text.style.display = 'inline-block';
+                        textboxBtn.style.display = 'block'; 
+
+                        typewriter(text, scene3Lines[currentLine], 10, () => {
+                            textboxBtn.style.display = 'block'; 
+                            currentLine++; 
+                        });  
+                    }, 500);
+                } 
+            }, 10);
+            return;
+        }
+
+        if(currentLine === 8){
+            typewriter(text, scene3Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });  
+            return;
+        }
+
+        fadeOverlay.style.display = 'block';
+        fadeOverlay.style.opacity = '1';
+        
+        setTimeout(() => {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            textboxDiv.style.display = 'none';
+            textbox.style.display = 'none';
+            text.style.display = 'none';
+            text.innerText = '';
+            textboxBtn.style.display = 'none';
+            window.removeEventListener('keydown', direction); 
+            context.drawImage(scene4Bg, 0, 0, canvas.width, canvas.height);
+            context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
+            scene4();
+
+            setTimeout(() => {
+                fadeOverlay.style.opacity = '.5';
+            }, 400)
+
+            fadeOverlay.style.opacity = '0';
+
+            setTimeout(() => {
+                fadeOverlay.style.display = 'none';
+            }, 400)
+
+            overlayCount++;
+        }, 200);    
     }
     
+    nextLine();
+    textboxBtn.addEventListener('click', nextLine);
+}
+function scene4(){
+    const scene4Lines = [
+        'Yikes, looks like someone went overboard here.',
+        "Alright, I dusted fingerprints off of the knife and the broken pots.",
+        "The knife's fingerprints belong to Leonardo di Meowci, and the broken pots fingerprints' belong to...",
+        "Catfinny?",
+        "What's her involvement in this? Looks like we should question her."
+    ];
+
+    currentScene = 4;
+    textboxDiv.style.display = 'block';
+    textbox.style.display = 'block';
+    text.style.display = 'inline-block';
+    textboxDiv.style.width = '317px';
+    textboxDiv.style.height = '350px';
+    textboxDiv.style.left = '450px';
+    textboxDiv.style.top = '615px';
+    textbox.style.width = '350px';
+    textbox.style.height = '150px';
+    text.innerText = '';
+    text.style.textAlign = 'center';
+    text.style.top = '35%';
+    text.style.left = '50%';
+    text.style.width = '270px';
+    text.style.height = '100px';
+    text.style.fontSize = '19px';
+    textboxBtn.style.display = 'block';
+    textboxBtn.style.left = (textboxDiv.offsetWidth + 400) + 'px';
+    textboxBtn.style.top = (textboxDiv.offsetHeight + 350) + 'px';
+
+    context.drawImage(catFront, 175, 600, 160, 160);
+
+    currentLine = 0;
+    function nextLine(){
+        if(currentLine < scene4Lines.length){
+            textboxBtn.style.display = 'none'; 
+            typewriter(text, scene4Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+        } else {
+            textboxBtn.style.display = 'none';
+            fadeOverlay.style.display = 'block';
+            fadeOverlay.style.opacity = '1';
+            
+            setTimeout(() => {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            textboxDiv.style.display = 'none';
+            textbox.style.display = 'none';
+            text.style.display = 'none';
+            textboxBtn.style.display = 'none';
+            context.drawImage(scene5Bg, 0, 0, canvas.width, canvas.height);
+            scene5();
+
+            setTimeout(() => {
+                fadeOverlay.style.opacity = '.5';
+            }, 400)
+
+            fadeOverlay.style.opacity = '0';
+
+            setTimeout(() => {
+                fadeOverlay.style.display = 'none';
+            }, 400)
+
+            overlayCount++;
+        }, 200);
+        } 
+    }
+    nextLine();
+    textboxBtn.addEventListener('click', nextLine);
+}
+function scene5(){
+    currentLine = 0;
+    const scene5Lines = [
+        "Hello, I'm Detective Pussycat. I heard you reported the death of Catricia Calligan.",
+        "Oh, yes, Catricia was a dear friend of mine, we often had tea together at the country club.",
+        "I was just reading my daily cat newspaper, when I suddenly heard a loud thud and a screeching yell.",
+        "I immediately called the CNYPD, I swear!",
+        "Did you see anyone leave the house?",
+        "I thought I saw a trace of a brown tail slipping around the house, but it was too dark and I was scared to follow.",
+        "I see. Well, we believe that you're the one that created a mess in Catricia's flower shop, is that true?",
+        "... That wasn't me.",
+        "Really? Then can you explain why your fingerprints were on the broken flower pots in her flower shop?",
+        "Fess up already. We have video evidence of you breaking in and destroying the plants.",
+        "Aw, shucks! This whole time I thought Catricia was too poor to buy surveillance cameras!",
+        "Okay, looks like we'll have to take you up to the station for now."
+    ];
+
+    textboxDiv.style.display = 'block';
+    textbox.style.display = 'block';
+    text.style.display = 'inline-block';
+
+    textboxDiv.style.width = 'fit-content';
+    textboxDiv.style.height = 'fit-content';
+    textbox.style.width = '500px';
+    textbox.style.height = '200px';
+    text.style.width = '420px';
+    text.style.height = '50px';
+    text.style.fontSize = '25px';
+    textboxBtn.style.left = textboxDiv.offsetWidth + 45 + 'px';
+    textboxBtn.style.top = (textboxDiv.offsetHeight + 360) + 'px';
+    textboxDiv.style.left = ((canvas.width - 500) / 2) + 'px';
+    textboxDiv.style.top = ((canvas.height) / 1.45) + 'px';
+
+    function nextLine(){
+        if(currentLine === 0){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'orange';
+            typewriter(text, scene5Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 1 || currentLine === 2 || currentLine === 3){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'black';
+            typewriter(text, scene5Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 4){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'orange';
+            typewriter(text, scene5Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 5){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'black';
+            typewriter(text, scene5Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 6){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'orange';
+            typewriter(text, scene5Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 7){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'black';
+            typewriter(text, scene5Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 8 || currentLine === 9){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'black';
+            typewriter(text, scene5Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 10){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'orange';
+            typewriter(text, scene5Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 11){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'black';
+            typewriter(text, scene5Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine > scene5Lines.length){
+            textboxBtn.style.display = 'none';
+            fadeOverlay.style.display = 'block';
+            fadeOverlay.style.opacity = '1';
+            
+            setTimeout(() => {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            textboxDiv.style.display = 'none';
+            textbox.style.display = 'none';
+            text.style.display = 'none';
+            textboxBtn.style.display = 'none';
+            context.drawImage(scene5Bg, 0, 0, canvas.width, canvas.height);
+            scene6();
+
+            setTimeout(() => {
+                fadeOverlay.style.opacity = '.5';
+            }, 400)
+
+            fadeOverlay.style.opacity = '0';
+
+            setTimeout(() => {
+                fadeOverlay.style.display = 'none';
+            }, 400)
+
+            overlayCount++;
+        }, 200);
+        }
+    }
+
+    nextLine();
+    textboxBtn.addEventListener('click', nextLine);
+}
+   /* make a 800x800 pixel pixel art image of a black cat with yellow eyes chatting
+    with a orange cat outside in front of a police station main desk. the orange cat is
+     wearing a brown detective cloak and a brown detective hat and front desk has the letters CNYPD on it.
+      the black cat is wearing police officer uniform. they are both standing.*/
+function scene6(){
+    currentLine = 0;
+    const scene6Lines = [
+        "Fine day, Mr. Phatty, sir. On  behalf of the Cat's Investigation Agency (CIA), I have some questions for you regarding a new murder case.",
+        "Who, Catricia Calligan?",
+        "Wait.. I never mentioned her. How did you know?",
+        "...",
+        "...",
+        "Anyway, multiple surveillance cameras have seen you sneakin' 'round her residence.",
+        "So? Got anything to say for yerself?",
+        "Fineee I confess, that new catnip-flavored candy was tempting and I couldn't wait for the release date.",
+        "...",
+        "...",
+        "You're lying.",
+        "No! No!",
+        "Then explain this:",
+        "Hm.. we don't have enough evidence against that Phatty",
+        "Unfortunately, we'll have to let him go for now, but we can still detain him overnight",
+        "I'll get the captain now, and we can start investigating the last suspect of the day."
+    ];
+
+    textboxDiv.style.display = 'block';
+    textbox.style.display = 'block';
+    text.style.display = 'inline-block';
+
+    textboxDiv.style.width = 'fit-content';
+    textboxDiv.style.height = 'fit-content';
+    textbox.style.width = '500px';
+    textbox.style.height = '200px';
+    text.style.width = '420px';
+    text.style.height = '50px';
+    text.style.fontSize = '25px';
+    textboxBtn.style.left = textboxDiv.offsetWidth + 45 + 'px';
+    textboxBtn.style.top = (textboxDiv.offsetHeight + 360) + 'px';
+    textboxDiv.style.left = ((canvas.width - 500) / 2) + 'px';
+    textboxDiv.style.top = ((canvas.height) / 1.45) + 'px';
+
+    function nextLine(){
+        if(currentLine === 0){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'orange';
+            typewriter(text, scene6Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 1){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'black';
+            typewriter(text, scene6Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 2){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'orange';
+            typewriter(text, scene6Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 4 || currentLine === 5 || currentLine === 6){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'black';
+            typewriter(text, scene6Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 5){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'orange';
+            typewriter(text, scene5Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 7){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'black';
+            typewriter(text, scene6Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 8 || currentLine === 9){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'black';
+            typewriter(text, scene6Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 10){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'orange';
+            typewriter(text, scene6Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+        if(currentLine === 11){
+            textboxBtn.style.display = 'none'; 
+            text.style.color = 'black';
+            typewriter(text, scene6Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+            return;
+        }
+    }
 
     nextLine();
     textboxBtn.addEventListener('click', nextLine);
@@ -426,7 +936,7 @@ function direction(e){
         case "ArrowRight":
             if(currentDirection !== 'ArrowLeft'){
                 currentDirection = 'right';
-                move(1, 0); 
+                move(1, 0);
             } 
             break;
     }
@@ -440,12 +950,12 @@ function move(x, y){
     
     let collisionObjs;
     let drawFunction;
-
+    
     if(currentScene === 2){
         collisionObjs = collisionObjsScene2;
         drawFunction = drawScene2;
     }
-    else if(currentScene === 3){
+    if(currentScene === 3){
         collisionObjs = collisionObjsScene3;
         drawFunction = drawScene3;
     }
@@ -456,11 +966,11 @@ function move(x, y){
         newY < (obj.y + obj.height) - 30 &&
         newY + cat.height > obj.y
     );
-    
+    console.log(collision)
     if (!collision) {
         cat.x = newX;
         cat.y = newY;
-        if(drawFunction) drawFunction(cat.x, cat.y);
+        drawFunction(newX, newY);
     }
 }
 function drawScene2(x, y){
@@ -504,7 +1014,7 @@ function drawScene3(x, y){
         case 'down':
             context.drawImage(catFront, x, y, cat.width, cat.height);
             console.log(x, y);
-            break
+            break;
     }
 }
 function typewriter(element, text, speed, callback) {
