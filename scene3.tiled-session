@@ -1,0 +1,31 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "scene3.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "scene3.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 990.6666666666666,
+                "y": 432
+            }
+        }
+    },
+    "last.exportedFilePath": "C:/Users/Hailey/OneDrive/Pictures/Documents/GitHub/hackathon-nyc-katz",
+    "map.height": 27,
+    "map.lastUsedExportFilter": "All Files (*)",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 27,
+    "openFiles": [
+        "scene3.tmx"
+    ],
+    "project": "scene3.tiled-project",
+    "recentFiles": [
+        "scene3.tmx"
+    ]
+}
