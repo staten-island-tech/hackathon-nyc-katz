@@ -26,6 +26,9 @@ let rightSideTable;
 let leftSideTable;
 //SCENE 4 VARS
 const scene4Bg = document.querySelector('.scene4Bg');
+//SCENE 5 VARS
+const scene5Bg = document.querySelector('.scene5Bg');
+
 
 let currentDirection = '';
 let moving = false;
@@ -95,13 +98,13 @@ playBtn.addEventListener('click', () => {
         playBtn.style.display = 'none';
         playSpan.style.display = 'none';
         playBtnBg.style.display = 'none';
-        context.drawImage(scene4Bg, 0, 0, canvas.width, canvas.height);
+        context.drawImage(scene5Bg, 0, 0, canvas.width, canvas.height);
         //context.drawImage(scene1Bg, 0, 0, canvas.width, canvas.height);
         //scene1();
         //context.drawImage(catFront, cat.x, cat.y, cat.width, cat.width);
         ///context.drawImage(catFront, 580, 660, cat.width, cat.height);
 
-        scene4();
+        scene5();
 
         setTimeout(() => {
             fadeOverlay.style.opacity = '.5';
@@ -566,7 +569,11 @@ function scene3(){
 }
 function scene4(){
     const scene4Lines = [
-        
+        'Yikes, looks like someone went overboard here.',
+        "Alright, I dusted fingerprints off of the knife and the broken pots.",
+        "The knife's fingerprints belong to Leonardo di Meowci, and the broken pots fingerprints' belong to...",
+        "Catfinny?",
+        "What's her involvement in this? Looks like we should question her."
     ];
 
     currentScene = 4;
@@ -575,18 +582,113 @@ function scene4(){
     text.style.display = 'inline-block';
     textboxDiv.style.width = '317px';
     textboxDiv.style.height = '350px';
-    textboxDiv.style.left = '230px';
-    textboxDiv.style.top = '370px';
+    textboxDiv.style.left = '450px';
+    textboxDiv.style.top = '615px';
     textbox.style.width = '350px';
     textbox.style.height = '150px';
+    text.innerText = '';
     text.style.textAlign = 'center';
-    text.style.top = '30%';
+    text.style.top = '35%';
+    text.style.left = '50%';
     text.style.width = '270px';
-    text.style.height = '0px';
+    text.style.height = '100px';
     text.style.fontSize = '19px';
     textboxBtn.style.display = 'block';
-    textboxBtn.style.left = (textboxDiv.offsetWidth + 175) + 'px';
-    textboxBtn.style.top = (textboxDiv.offsetHeight + 100) + 'px';
+    textboxBtn.style.left = (textboxDiv.offsetWidth + 400) + 'px';
+    textboxBtn.style.top = (textboxDiv.offsetHeight + 350) + 'px';
+
+    context.drawImage(catFront, 175, 600, 160, 160);
+
+    currentLine = 0;
+    function nextLine(){
+        if(currentLine < scene4Lines.length){
+            textboxBtn.style.display = 'none'; 
+            typewriter(text, scene4Lines[currentLine], 10, () => {
+                textboxBtn.style.display = 'block'; 
+                currentLine++; 
+            });
+        } else {
+            textboxBtn.style.display = 'none';
+            fadeOverlay.style.display = 'block';
+            fadeOverlay.style.opacity = '1';
+            
+            setTimeout(() => {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            textboxDiv.style.display = 'none';
+            textbox.style.display = 'none';
+            text.style.display = 'none';
+            textboxBtn.style.display = 'none';
+            context.drawImage(scene5Bg, 0, 0, canvas.width, canvas.height);
+            scene5();
+
+            setTimeout(() => {
+                fadeOverlay.style.opacity = '.5';
+            }, 400)
+
+            fadeOverlay.style.opacity = '0';
+
+            setTimeout(() => {
+                fadeOverlay.style.display = 'none';
+            }, 400)
+
+            overlayCount++;
+        }, 200);
+        } 
+    }
+    nextLine();
+    textboxBtn.addEventListener('click', nextLine);
+}
+function scene5(){
+    let grayCurrentLine = 0;
+    let detectiveCurrentLine = 0;
+    const grayCatLines = [
+        "Oh, yes, Catricia was a dear friend of mine, we often had tea together at the country club.",
+        "I was just reading my daily cat newspaper, when I suddenly heard a loud thud and a screeching yell.",
+        "I immediately called the CYPL, I swear!",
+        "I thought I saw a trace of a brown tail slipping around the house, but it was too dark and I was scared to follow.",
+        "... That wasn't me.",
+        "Aw, shucks! This whole time I thought Catricia was too poor to buy surveillance cameras!"
+    ];
+    const detectiveLines = [
+        "Hello, I'm Detective Pussycat. I heard you reported the death of Catricia Calligan.",
+        "Did you see anyone leave the house?",
+        "I see. Well, we believe that you're the one that created a mess in Catricia's flower shop, is that true?",
+        "Really? Then can you explain why your fingerprints were on the broken flower pots in her flower shop?",
+        "Fess up already. We have video evidence of you breaking in and destroying the plants."
+    ];
+
+    textboxDiv.style.display = 'block';
+    textbox.style.display = 'block';
+    text.style.display = 'inline-block';
+
+    textboxDiv.style.width = 'fit-content';
+    textboxDiv.style.height = 'fit-content';
+    textbox.style.width = '500px';
+    textbox.style.height = '200px';
+    text.style.width = '420px';
+    text.style.height = '50px';
+    text.style.fontSize = '25px';
+    textboxBtn.style.left = textboxDiv.offsetWidth + 45 + 'px';
+    textboxBtn.style.top = (textboxDiv.offsetHeight + 360) + 'px';
+    textboxDiv.style.left = ((canvas.width - 500) / 2) + 'px';
+    textboxDiv.style.top = ((canvas.height) / 1.45) + 'px';
+
+    if(detectiveCurrentLine === 0){
+        textboxBtn.style.display = 'none'; 
+        text.style.color = 'orange';
+        typewriter(text, detectiveLines[detectiveCurrentLine], 10, () => {
+            textboxBtn.style.display = 'block'; 
+            detectiveCurrentLine++; 
+        });
+    }
+    if(grayCurrentLine === 0){
+        textboxBtn.style.display = 'none'; 
+        text.style.color = 'black';
+        typewriter(text, grayCatLines[grayCurrentLine], 10, () => {
+            textboxBtn.style.display = 'block'; 
+            grayCurrentLine++; 
+        });
+    }
 }
 function direction(e){
     switch(e.key){
