@@ -104,3 +104,13 @@ body{
 .weddingPortrait{
     z-index: 3;
 }
+.span{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1;
+}
