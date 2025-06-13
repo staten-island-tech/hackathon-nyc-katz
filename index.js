@@ -1178,6 +1178,21 @@ function suspect1(){
        "MR. WHALEN GIB ME DONUTS NOW 👽🤡🙈😈🤬👹👺🤖👾👻"
     ];
 
+    textboxDiv.style.display = 'none';
+    textbox.style.display = 'none';
+    text.style.display = 'none';
+    textboxBtn.style.display = 'none';
+
+    suspect1Btn.style.display = 'none';
+    suspect2Btn.style.display = 'none';
+    suspect3Btn.style.display = 'none';
+    suspect1Bg.style.display = 'none';
+    suspect2Bg.style.display = 'none';
+    suspect3Bg.style.display = 'none';
+    suspect1Span.style.display = 'none';
+    suspect2Span.style.display = 'none';
+    suspect3Span.style.display = 'none';
+
     textboxDiv.style.display = 'block';
     textbox.style.display = 'block';
     text.style.display = 'inline-block';
