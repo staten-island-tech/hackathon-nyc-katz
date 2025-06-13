@@ -37,38 +37,7 @@ body{
     pointer-events: none;
     z-index: 1;
 }
-.textboxDiv{
-    position: fixed;
-    border: none;
-    background-color: transparent;
-    padding: 0;
-    height: fit-content;
-    width: fit-content;
-    margin: 0;
-    white-space: pre-wrap;
-    /*border: 2px solid red;*/
-}
-.textbox{
-    position: relative;
-    display: none;
-    width: 500px;
-    height: 200px;
-    image-rendering: pixelated;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-    justify-content: center;
-    /*border: 2px solid greenyellow;*/
-}
-.text{
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    font-size: 25px;
-    width: 420px;
-    height: 50px;
-    /*border: 2px solid blue;*/
-}
+
 .fadeOverlay {
     left: 0;
     top: 0;
@@ -106,16 +75,14 @@ body{
 }
 .span{
     display: flex;
-    justify-content: center;
     align-items: center;
     text-align: center;
     position: absolute;
     top: 0%;
-    right: 10%;
-    font-size: 25px;
+    right: 20%;
+    font-size: 20px;
     width: fit-content;
     height: fit-content;
-    border: 2px solid blue;
     z-index: 5;
     margin: 0;
     padding: 0;
@@ -127,9 +94,12 @@ body{
     height: 40px;
 }
 .suspectDesc{
-    margin: 0px;
+    height: 20px;
+    margin: 0;
     padding: 0;
-    border: 2px solid green;
+    font-size: 13px;
+    position: relative;
+    bottom: 50px;
 }
 .suspectBtn{
     position: fixed;
@@ -141,7 +111,6 @@ body{
     width: fit-content;
     margin: 0;
     white-space: pre-wrap;
-    border: 2px solid red;
 }
 .suspectDiv{
     position: relative;
@@ -153,4 +122,56 @@ body{
     padding: 0;
     margin: 0;
     justify-content: center;
+}
+.suspectBtn{
+
+}
+.endText{
+    color: white;
+    font-size: 25px;
+    white-space: pre-wrap;
+    text-align: center;
+    position: absolute;
+    font-size: 25px;
+    width: 420px;
+    height: 50px;
+}
+.endDiv{
+    position: fixed;
+    border: none;
+    background-color: transparent;
+     padding: 0;
+    height: fit-content;
+    width: fit-content;
+    margin: 0;
+    white-space: pre-wrap;
+}
+.textboxDiv{
+    position: fixed;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    height: fit-content;
+    width: fit-content;
+    margin: 0;
+    white-space: pre-wrap;
+}
+.textbox{
+    position: relative;
+    display: none;
+    width: 500px;
+    height: 200px;
+    image-rendering: pixelated;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+}
+.text{
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    font-size: 25px;
+    width: 420px;
+    height: 50px;
 }
