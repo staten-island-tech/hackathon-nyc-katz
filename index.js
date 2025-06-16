@@ -128,7 +128,7 @@ function transitionToScene(sceneFunction, sceneBackground) {
   setTimeout(() => {
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.drawImage(sceneBackground, 0, 0, canvas.width, canvas.height);
-   
+   sceneFunction();
 
     setTimeout(() => {
       fadeOverlay.style.opacity = '.5';
@@ -890,8 +890,6 @@ function scene6(){
     textboxBtn.addEventListener('click', nextLine);
     nextLine();
 }
-
-
 function scene7(){
     let currentLine = 0;
     currentScene = 7;
@@ -1108,30 +1106,12 @@ function scene8(){
 
             
             suspectChoose1.addEventListener('click', ()=>{
-                fadeOverlay.style.display = 'block';
+               fadeOverlay.style.display = 'block';
                 suspect2Btn.style.display = 'none';
                 suspect3Btn.style.display = 'none';
                 suspect1Btn.style.display = 'none';
 
-                setTimeout(() => {
-                    textboxDiv.style.display = 'none';
-                    textbox.style.display = 'none';
-                    text.style.display = 'none';
-                    textboxBtn.style.display = 'none';
-                    context.drawImage(suspect1JailBg, 0, 0, canvas.width, canvas.height);
-                    suspect1();
-                    
-                setTimeout(() => {
-                    fadeOverlay.style.opacity = '.5';
-                }, 400)
-
-                fadeOverlay.style.opacity = '0';
-
-                setTimeout(() => {
-                    fadeOverlay.style.display = 'none';
-                }, 400)
-
-                }, 400);
+                transitionToScene(suspect1, suspect1JailBg);
             });
             suspectChoose2.addEventListener('click', ()=>{
                 fadeOverlay.style.display = 'block';
@@ -1139,7 +1119,7 @@ function scene8(){
                 suspect3Btn.style.display = 'none';
                 suspect1Btn.style.display = 'none';
 
-                transitionToScene(suspect2, suspect2Bg)
+                transitionToScene(suspect2, suspect2JailBg);
             });
             suspectChoose3.addEventListener('click', ()=>{
                 fadeOverlay.style.display = 'block';
@@ -1152,10 +1132,6 @@ function scene8(){
 
         }
     }
-   // textboxBtn.removeEventListener('click', nextLine);
-   // textboxBtn.addEventListener('click', nextLine);
-   // textboxBtn.removeEventListener('click', nextLine);
-   // textboxBtn.addEventListener('click', nextLine);
     nextLine();
 }
 function suspect1(){
