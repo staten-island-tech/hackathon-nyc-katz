@@ -128,7 +128,7 @@ function transitionToScene(sceneFunction, sceneBackground) {
   setTimeout(() => {
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.drawImage(sceneBackground, 0, 0, canvas.width, canvas.height);
-    sceneFunction();
+   
 
     setTimeout(() => {
       fadeOverlay.style.opacity = '.5';
@@ -890,6 +890,8 @@ function scene6(){
     textboxBtn.addEventListener('click', nextLine);
     nextLine();
 }
+
+
 function scene7(){
     let currentLine = 0;
     currentScene = 7;
@@ -1043,6 +1045,16 @@ function scene8(){
     suspect2Span.style.display = 'none';
     suspect3Span.style.display = 'none';
 
+    suspect1Btn.style.display = 'none';
+    suspect2Btn.style.display = 'none';
+    suspect3Btn.style.display = 'none';
+    suspect1Bg.style.display = 'none';
+    suspect2Bg.style.display = 'none';
+    suspect3Bg.style.display = 'none';
+    suspect1Span.style.display = 'none';
+    suspect2Span.style.display = 'none';
+    suspect3Span.style.display = 'none';
+
     textboxBtn.style.left = textboxDiv.offsetWidth + 240 + 'px';
     textboxBtn.style.top = (canvas.height - textboxDiv.offsetHeight + 220) + 'px';
     text.style.top = '30%';
@@ -1101,7 +1113,25 @@ function scene8(){
                 suspect3Btn.style.display = 'none';
                 suspect1Btn.style.display = 'none';
 
-                transitionToScene(suspect1, suspect1JailBg);
+                setTimeout(() => {
+                    textboxDiv.style.display = 'none';
+                    textbox.style.display = 'none';
+                    text.style.display = 'none';
+                    textboxBtn.style.display = 'none';
+                    context.drawImage(suspect1JailBg, 0, 0, canvas.width, canvas.height);
+                    suspect1();
+                    
+                setTimeout(() => {
+                    fadeOverlay.style.opacity = '.5';
+                }, 400)
+
+                fadeOverlay.style.opacity = '0';
+
+                setTimeout(() => {
+                    fadeOverlay.style.display = 'none';
+                }, 400)
+
+                }, 400);
             });
             suspectChoose2.addEventListener('click', ()=>{
                 fadeOverlay.style.display = 'block';
@@ -1109,7 +1139,7 @@ function scene8(){
                 suspect3Btn.style.display = 'none';
                 suspect1Btn.style.display = 'none';
 
-                transitionToScene(suspect2, suspect2JailBg);
+                transitionToScene(suspect2, suspect2Bg)
             });
             suspectChoose3.addEventListener('click', ()=>{
                 fadeOverlay.style.display = 'block';
@@ -1122,6 +1152,8 @@ function scene8(){
 
         }
     }
+   // textboxBtn.removeEventListener('click', nextLine);
+   // textboxBtn.addEventListener('click', nextLine);
    // textboxBtn.removeEventListener('click', nextLine);
    // textboxBtn.addEventListener('click', nextLine);
     nextLine();
@@ -1158,8 +1190,6 @@ function suspect1(){
     textboxDiv.style.display = 'block';
     textbox.style.display = 'block';
     text.style.display = 'inline-block';
-    textboxBtn.removeEventListener('click', nextLine);
-    textboxBtn.addEventListener('click', nextLine);   
 
     function nextLine(){
         if(currentLine === 0){
@@ -1202,9 +1232,8 @@ function suspect1(){
         }
     }
 
-    textboxBtn.removeEventListener('click', nextLine);
-    textboxBtn.addEventListener('click', nextLine);   
     nextLine();
+    textboxBtn.addEventListener('click', nextLine);    
 }
 function suspect2(){
     currentLine = 0;
@@ -1290,9 +1319,8 @@ function suspect2(){
         }
     }
 
-    textboxBtn.removeEventListener('click', nextLine);
-    textboxBtn.addEventListener('click', nextLine);  
-    nextLine(); 
+    nextLine();
+    textboxBtn.addEventListener('click', nextLine);    
 }
 function suspect3(){
     currentLine = 0;
