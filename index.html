@@ -59,39 +59,38 @@
 
     <!-- scene 7 -->
     <img class="subwayImg" src="static/train.png" style="display: none;">
+    <img class="leonardo" src="static/leonardo.png" style="display: none;">
 
     <!--scene 8 -->
     <div class="suspectBtn1 suspectBtn" style="display: none;">
         <img class="suspectDiv suspect1Bg" src="static/containerDiv.png" style="display: none;">
-        <img class="suspect1Headshot" style="display: none;">
         <div class="suspect1Span span" style="display: none;">
             <h2 class="suspectName">Suspect 1: Leonardo da Meowci</h2>
             <p class="suspectDesc">
                 - Catricia's ex-husband, who she divorced after he went insane. <br>
                 - Jealous of Catricia's success <br>
-                - His fingerprints were on the murder weapon
+                - His fingerprints were on the murder weapon <br>
+                - Catfinny claims she saw a brown tail leaving Catricia's house
             </p>
-            <button type="button" id='suspect1' class="suspectBtn suspectBtn1">Choose</button>
         </div>
+        <button type="button" id='suspect1' class="suspectChooseBtn suspectChooseBtn1">Choose</button>
     </div>
 
     <div class="suspectBtn2 suspectBtn" style="display: none;">
         <img class="suspectDiv suspect2Bg" src="static/containerDiv.png" style="display: none;">
-        <img class="suspect2Headshot" style="display: none;">
         <div class="suspect2Span span" style="display: none;">
             <h2 class="suspectName suspectName2">Suspect 2: Officer Phatty</h2>
             <p class="suspectDesc suspectDesc2">
-                - Officier Phatty was reported having been annoyed that Catricia was let out of prison for her tax evasion charges. After her death, his attitude suddenly returned to normal. <br>
-                - Seen stalking Catricia before her death and lied about the reason why <br>
-                - Suspected of selling maurijuana and cocaine illegally. <br>
+                - Officier Phatty was reported having been annoyed that Catricia was let out of prison for her tax evasion charges. After her death, his attitude suddenly returned to normal. 
+                - Seen stalking Catricia before her death and lied about the reason why 
+                - Suspected of selling maurijuana and cocaine illegally. 
                 - Knew about Catricia's death even though it wasn't public knowledge.
             </p>
-            <button type="button" id='suspect2' class="suspectBtn suspectBtn2">Choose</button>
         </div>
+        <button type="button" id='suspect2' class="suspectChooseBtn suspectChooseBtn2">Choose</button>
     </div>
     <div class="suspectBtn3 suspectBtn" style="display: none;">
         <img class="suspectDiv suspect3Bg" src="static/containerDiv.png" style="display: none;">
-        <img class="suspect3Headshot" style="display: none;">
         <div class="suspect3Span span" style="display: none;">
             <h2 class="suspectName">Suspect 3: Catfinny Catsmith</h2>
             <p class="suspectDesc">
@@ -99,9 +98,10 @@
                 - Heard loud sounds and a screech, but denies knowing anything else. <br>
                 - Broke into Catricia's flower shop and destroyed all the plants.
             </p>
-            <button type="button" id='suspect3' class="suspectBtn suspectBtn3">Choose</button>
         </div>
+        <button type="button" id='suspect3' class="suspectChooseBtn suspectChooseBtn3">Choose</button>
     </div>
+    
     <img class="suspect1Jail" src="static/suspect1Jail.png" style="display: none;">
     <img class="suspect2Jail" src="static/Suspect3Jail.png" style="display: none;">
     <img class="suspect3Jail" src="static/suspect2Jail.png" style="display: none;">
@@ -110,10 +110,11 @@
     <div class="endDiv" style="display: none;">
        <p class="endText" style="display: none;"></p> 
     </div>
-    
+
     <!--transitions btwn scenes-->
     <div class="fadeOverlay" style="display: none;"></div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
     <script src="index.js"></script>
 </body>
 </html>
